@@ -1,0 +1,205 @@
+@import "./extend";
+.about {
+	position: absolute;
+	width: 90%;
+	height: 80%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	z-index: 10;
+	.main {
+		position: relative;
+
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		left: 3%;
+		.table {
+			display: flex;
+
+			p {
+				font-size: 2rem;
+				margin-bottom: 8%;
+			}
+
+			.inside1 {
+				font-weight: bold;
+				span {
+					display: block;
+					position: relative;
+					overflow: hidden;
+
+					span.line-effect {
+						animation-timing-function: cubic-bezier(0.2, 1, 0.1, 1);
+					}
+					%word-effects {
+						inset: 0;
+						margin: auto;
+						width: 100%;
+						height: calc(100% - 20%);
+						background-color: var(--background-color1);
+					}
+					$animation-duration: 1s;
+
+					@keyframes word-effect {
+						0% {
+							transform: translateX(105%);
+						}
+						40%,
+						60% {
+							transform: translateX(0);
+						}
+
+						100% {
+							transform: translateX(-105%);
+						}
+					}
+					@keyframes word-appear-effect {
+						49% {
+							opacity: 0;
+						}
+						50%,
+						100% {
+							opacity: 1;
+						}
+					}
+					&:nth-child(1) {
+						.line-effect {
+							@extend %content;
+							@extend %word-effects;
+							transform: translateX(105%);
+							animation: word-effect $animation-duration ease forwards;
+							animation-delay: var(--animation-delay);
+						}
+						p {
+							animation-delay: var(--animation-delay);
+						}
+					}
+					&:nth-child(2) {
+						.line-effect {
+							@extend %content;
+							@extend %word-effects;
+							transform: translateX(-105%);
+
+							animation: word-effect2 $animation-duration ease forwards;
+							animation-delay: calc(var(--animation-delay) * 1.3);
+						}
+
+						p {
+							animation-delay: calc(var(--animation-delay) * 1.3);
+						}
+
+						@keyframes word-effect2 {
+							0% {
+								transform: translateX(-105%);
+							}
+							50% {
+								transform: translateX(0);
+							}
+
+							100% {
+								transform: translateX(105%);
+							}
+						}
+					}
+					&:nth-child(3) {
+						.line-effect {
+							@extend %content;
+							@extend %word-effects;
+							transform: translateX(105%);
+
+							animation: word-effect $animation-duration ease forwards;
+							animation-delay: calc(var(--animation-delay) * 1.6);
+						}
+
+						p {
+							animation-delay: calc(var(--animation-delay) * 1.6);
+						}
+					}
+
+					p {
+						opacity: 0;
+						animation: word-appear-effect $animation-duration ease forwards;
+						animation-delay: var(--animation-delay);
+						z-index: -1;
+					}
+				}
+			}
+			.inside2 {
+				margin-left: 5%;
+				font-weight: bold;
+
+				p {
+					margin-bottom: 6%;
+					color: var(--secondary-color1);
+
+					@keyframes word-effect3 {
+						0% {
+							transform: translateX(30%);
+						}
+						100% {
+							transform: translateX(0);
+							opacity: 1;
+						}
+					}
+					&:nth-child(1) {
+						opacity: 0;
+						animation: word-effect3 1s forwards;
+						animation-delay: calc(var(--animation-delay) * 1.5);
+					}
+					&:nth-child(2) {
+						opacity: 0;
+						animation: word-effect3 1s forwards;
+						animation-delay: calc(var(--animation-delay) * 1.7);
+					}
+					&:nth-child(3) {
+						opacity: 0;
+						animation: word-effect3 1s forwards;
+						animation-delay: calc(var(--animation-delay) * 1.9);
+					}
+				}
+			}
+		}
+
+		p {
+			font-size: 1.5rem;
+			color: var(--word-color);
+			letter-spacing: 0.1rem;
+			line-height: 3rem;
+		}
+		.description {
+			margin-top: 5%;
+			animation: p-effect 1s forwards;
+			animation-delay: calc(var(--animation-delay) * 2.2);
+			opacity: 0;
+		}
+		@keyframes p-effect {
+			0% {
+				transform: translateY(20%);
+				opacity: 0;
+			}
+			100% {
+				transform: translateY(0);
+				opacity: 1;
+			}
+		}
+	}
+}
+
+@media (max-width: 850px) {
+	.about.content {
+		.main {
+			width: auto;
+			margin: 0 5%;
+			.table {
+				p {
+					font-size: 2.4rem;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,492 @@
+.skill {
+	position: absolute;
+	width: 90%;
+	height: 80%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	z-index: 10;
+
+	.main {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		.blur,
+		.arrows {
+			z-index: -10;
+			position: absolute;
+			width: 60%;
+			height: 100%;
+			inset: 0;
+			margin: auto;
+
+			opacity: 0;
+
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.blur {
+			&.active {
+				z-index: 10;
+
+				transition: opacity 0.5s;
+				transition-delay: 0.3s;
+				opacity: 1;
+
+				&::before {
+					content: "";
+					position: absolute;
+					inset: 0;
+					margin: auto;
+					width: 100%;
+					height: 100%;
+					opacity: 0.8;
+
+					background-color: var(--background-color2);
+				}
+			}
+		}
+		.arrows {
+			$arrow-size: 8%;
+
+			.left-arrow,
+			.right-arrow {
+				position: relative;
+				z-index: 1;
+				width: $arrow-size;
+				padding-bottom: $arrow-size;
+				margin: 0 5%;
+
+				visibility: hidden;
+				opacity: 0;
+
+				cursor: pointer;
+
+				$wh: 20%;
+
+				&::before {
+					content: "";
+					position: absolute;
+					width: 75%;
+					height: 75%;
+
+					inset: 0;
+					margin: auto;
+
+					border-radius: 50%;
+					border: solid 1px var(--light-color);
+					filter: blur(1px);
+
+					transition: 0.5s;
+				}
+
+				$s: 0.5s;
+				$bezier: cubic-bezier(0.67, 0.13, 0.3, 0.85);
+				.minus,
+				.plus {
+					content: "";
+					position: absolute;
+
+					width: 100%;
+					height: 100%;
+					inset: 0;
+					margin: auto;
+					&::before {
+						content: "";
+						position: absolute;
+
+						width: 30%;
+						height: 1px;
+						inset: 0;
+						margin: auto;
+						background-color: var(--light-color);
+
+						transition: $s;
+						transition-timing-function: $bezier;
+					}
+				}
+				.plus {
+					&::after {
+						content: "";
+						position: absolute;
+
+						width: 1px;
+						height: 30%;
+						inset: 0;
+						margin: auto;
+						background-color: var(--light-color);
+
+						transition: $s;
+						transition-timing-function: $bezier;
+					}
+				}
+			}
+
+			.left-arrow {
+				transform: translateX(200%);
+			}
+			.right-arrow {
+				transform: translateX(-200%);
+			}
+
+			&.active {
+				z-index: 101;
+
+				transition: z-index 0.5s step-end;
+				transition-delay: 0.3s;
+				opacity: 1;
+
+				.left-arrow,
+				.right-arrow {
+					transition: 0.5s;
+					transition-delay: 0.6s;
+					visibility: visible;
+					opacity: 1;
+					transform: translateX(0);
+					overflow: hidden;
+					&.wave-effect::after {
+						content: "";
+						position: absolute;
+
+						width: 60%;
+						height: 60%;
+
+						inset: 0;
+						margin: auto;
+
+						border-radius: 50%;
+						border: solid 1px var(--light-color);
+						filter: blur(1px);
+
+						transition: 0.5s;
+						animation: wave-arrows 0.5s;
+					}
+					@keyframes wave-arrows {
+						0% {
+							transform: scale(1);
+						}
+						100% {
+							transform: scale(1.5);
+							opacity: 0;
+						}
+					}
+
+					&:hover {
+						&::before {
+							width: 60%;
+							height: 60%;
+						}
+
+						$deg: 270deg;
+						$scale: 0.8;
+						.minus {
+							&::before {
+								transform: rotate($deg + 90deg) scale($scale);
+							}
+						}
+						.plus {
+							&::before {
+								transform: rotate($deg) scale($scale);
+							}
+							&::after {
+								transform: rotate($deg) scale($scale);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		ul {
+			z-index: 2;
+			width: 100%;
+			height: 72%;
+			display: grid;
+			grid-template-columns: repeat(2, 20%);
+			grid-template-rows: repeat(4, 25%);
+			justify-content: center;
+			top: 3%;
+			gap: 0 7%;
+
+			li {
+				z-index: -1;
+				box-sizing: border-box;
+				width: 100%;
+				height: 60%;
+				padding: 5%;
+
+				font-size: 1.5rem;
+				font-weight: bold;
+				color: var(--word-color);
+
+				transition: transform 0.3s;
+
+				.description {
+					visibility: hidden;
+
+					.sentence {
+						letter-spacing: 0.1rem;
+						line-height: 2rem;
+					}
+				}
+
+				&:not(.active):hover {
+					transform: scale(1.1);
+				}
+				&.active {
+					animation: z-index 0.1s forwards 0.5s;
+					animation-delay: 0.5s;
+					@keyframes z-index {
+						100% {
+							z-index: 100;
+						}
+					}
+
+					.description {
+						position: absolute;
+						width: 90%;
+						height: 60%;
+						left: 50%;
+						transform: translateX(-50%);
+						margin-top: 5%;
+						font-size: 1.5rem;
+						animation: description 1s linear forwards;
+						animation-delay: 0.5s;
+
+						p:nth-child(4) {
+							margin-top: 2%;
+							font-weight: normal;
+							font-size: 1rem;
+						}
+
+						@keyframes description {
+							100% {
+								visibility: visible;
+							}
+						}
+					}
+					.active.info {
+						animation: info-move-effect 1s forwards;
+						animation-timing-function: cubic-bezier(0.28, 0.7, 0.69, 0.99);
+						z-index: 100;
+						font-size: 2rem;
+						transition-delay: 0.5s;
+						opacity: 1;
+
+						box-shadow: 1px 1px 5px var(--background-color1);
+						border: solid 1px var(--background-color1);
+						span {
+							transition: 0.5s;
+							width: 60%;
+							padding-bottom: 2%;
+							margin-top: 3%;
+						}
+					}
+
+					$width: 35%;
+					@keyframes info-move-effect {
+						10% {
+							transform: translateX(10%);
+							position: relative;
+							width: 100%;
+							height: 100%;
+							padding: 5%;
+						}
+						15% {
+							opacity: 0;
+						}
+
+						50% {
+							transform: translateY(10%);
+							position: absolute;
+							width: $width;
+							height: 50%;
+							padding: 2%;
+							inset: 0;
+							margin: auto;
+							opacity: 0;
+						}
+						90%,
+						100% {
+							position: absolute;
+							width: $width;
+							height: 50%;
+							padding: 2%;
+							inset: 0;
+							margin: auto;
+							opacity: 1;
+							transform: translateY(0);
+						}
+					}
+				}
+				.info {
+					position: relative;
+					box-shadow: 1px 1px 5px var(--background-color1);
+					background-color: var(--background-color2);
+					border-radius: 0 0 1rem 0;
+					width: 100%;
+					height: 100%;
+					padding: 5% 5% 5% 10%;
+					opacity: 0;
+					animation: info-appear 0.5s ease-in-out forwards;
+
+					cursor: pointer;
+					overflow: hidden;
+					&::before {
+						position: absolute;
+						z-index: -1;
+						left: 0;
+						top: 0;
+						content: "";
+						width: 5px;
+						height: 100%;
+						background-color: var(--primary-color1);
+					}
+
+					@keyframes info-appear {
+						50% {
+							opacity: 0;
+							transform: translateX(10%);
+						}
+						100% {
+							opacity: 1;
+							transform: translateX(0);
+						}
+					}
+
+					span {
+						position: relative;
+						display: block;
+						width: 100%;
+
+						padding-bottom: 3%;
+						border-radius: 10px;
+
+						background-color: var(--background-color3);
+
+						margin-top: 5%;
+						&::before {
+							content: "";
+							position: absolute;
+							width: 0%;
+
+							height: 100%;
+							border-radius: 10px;
+							background-color: var(--secondary-color1);
+
+							animation: bar-effect 1s ease-in-out forwards;
+							animation-delay: var(--animation-delay);
+							animation-timing-function: cubic-bezier(0.45, -0.02, 0.48, 1.15);
+						}
+						@keyframes bar-effect {
+							0% {
+								width: 0;
+							}
+							90% {
+								width: calc(var(--percentage) + 5%);
+							}
+
+							100% {
+								width: var(--percentage);
+							}
+						}
+						&.accent-color::before {
+							background-color: var(--accent-color1);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 850px) {
+	.skill {
+		&.content {
+			overflow: hidden;
+			height: 80%;
+			.main {
+				height: 100%;
+				align-items: flex-start;
+				padding-top: 0;
+
+				.blur {
+					width: 100%;
+					height: 110%;
+					top: 0;
+				}
+				.arrows {
+					width: 100%;
+
+					top: -10%;
+
+					.arrow {
+						margin: 0 -2%;
+					}
+				}
+				ul {
+					position: absolute;
+					grid-template-columns: repeat(2, 40%);
+					grid-template-rows: repeat(4, calc(clamp(60px, 18vw, 150px)));
+
+					li.active {
+						.description {
+							position: relative;
+							left: 0;
+							transform: translate(0, 0);
+						}
+					}
+					.info {
+						//width: 90%;
+						//height: 100%;
+						height: calc(max(70%, 30px));
+
+						@keyframes info-move-effect {
+							10% {
+								transform: translateX(10%);
+								position: relative;
+								width: 100%;
+								height: 100%;
+								padding: 5%;
+							}
+							15% {
+								opacity: 0;
+							}
+
+							50% {
+								transform: translateY(-40%) translateX(-50%);
+								position: absolute;
+								width: 75%;
+								height: auto;
+								padding: 3% 3% 5% 8%;
+								top: 45%;
+								left: 50%;
+								opacity: 0;
+							}
+							90%,
+							100% {
+								position: absolute;
+								width: 75%;
+								height: auto;
+								padding: 3% 3% 5% 8%;
+								top: 45%;
+								left: 50%;
+								opacity: 1;
+								transform: translateY(-50%) translateX(-50%);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
