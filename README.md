@@ -2,7 +2,7 @@
 
 <h1>概要</h1>
 
-ページへのURL https://ycamera.github.io/profile
+URL https://ycamera.github.io/profile
 
 Reactの勉強を兼ねて、自己紹介ページを作成しました。<br>
 <br>
