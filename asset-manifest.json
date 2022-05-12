@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/profile/static/css/main.135d55f5.css",
+    "main.css": "/profile/static/css/main.a549fcb6.css",
     "main.js": "/profile/static/js/main.9d8ca420.js",
     "static/media/Minesweeper.png": "/profile/static/media/Minesweeper.0f6624ae2b233ddc7288.png",
     "static/media/Movight.png": "/profile/static/media/Movight.5337bb83580c523ce598.png",
     "index.html": "/profile/index.html",
-    "main.135d55f5.css.map": "/profile/static/css/main.135d55f5.css.map",
+    "main.a549fcb6.css.map": "/profile/static/css/main.a549fcb6.css.map",
     "main.9d8ca420.js.map": "/profile/static/js/main.9d8ca420.js.map"
   },
   "entrypoints": [
-    "static/css/main.135d55f5.css",
+    "static/css/main.a549fcb6.css",
     "static/js/main.9d8ca420.js"
   ]
 }
