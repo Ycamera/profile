@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 export const Skill = (props) => {
-	props.currentPage(3);
+	//props.currentPage(3);
 
 	//配列ないのページの位置
 	const [position, setPosition] = useState();
@@ -9,9 +9,8 @@ export const Skill = (props) => {
 
 	//elementの要素の'active'クラスを付加、削除　 elemenet: dom, choice: 'add' or 'remove'
 	function classAddRemove(element, choice) {
-		if (choice == "add") {
-			if (element.className != "active") {
-				element.children[0].classList.add("active");
+		if (choice === "add") {
+			if (!element.classList.contains("active")) {
 				element.classList.add("active");
 
 				const blur = document.querySelector(".main ul .blur");
@@ -21,8 +20,7 @@ export const Skill = (props) => {
 				arrows.classList.add("active");
 			}
 		} else {
-			if (element.className == "active") {
-				element.children[0].classList.remove("active");
+			if (element.classList.contains("active")) {
 				element.classList.remove("active");
 			}
 		}
@@ -70,20 +68,21 @@ export const Skill = (props) => {
 
 	//初回レンダー時の読み込み
 	useEffect(() => {
-		const skillElements = document.querySelectorAll(".main ul li");
+		const skillElements = document.querySelectorAll(".main ul .card");
 		//スキル要素をクリックするとその<li>タグに'active'クラスを付加
 		skillElements.forEach((f, index) => {
 			f.addEventListener("click", () => {
 				//既にactiveクラスが付加されている場合は削除して閉じる
 				//activeクラスが付加されていない場合は付加して詳細を開く
 				const remove = skillElements[index];
-				remove.className == "active" ? classAddRemove(remove, "remove") : setPosition(index);
+
+				remove.classList.contains("active") ? classAddRemove(remove, "remove") : setPosition(index);
 				blurReset();
 			});
 		});
 		//スキル要素外をクリックすると付加された　'active' クラスを削除
 		document.addEventListener("click", ({ target }) => {
-			if (!target.closest(".skill .info") && !target.closest(".skill .arrow")) {
+			if (!target.closest(".skill .card") && !target.closest(".skill .arrow")) {
 				setPosition("reset");
 				blurReset();
 			}
@@ -96,12 +95,12 @@ export const Skill = (props) => {
 		const skillElements = document.querySelectorAll(".main ul li");
 
 		if (skillElements.length > 0) {
-			if ((position != "reset" && position) || position === 0) {
+			if ((position !== "reset" && position) || position === 0) {
 				const add = skillElements[position];
 
 				classAddRemove(add, "add");
 				setCurrentPosition(position);
-			} else if (position == "reset") {
+			} else if (position === "reset") {
 				pageReset();
 			}
 		}
@@ -111,7 +110,9 @@ export const Skill = (props) => {
 	return (
 		<div className="skill content">
 			<span className="line"></span>
-			<h1 className="title">Skill</h1>
+			<div className="title">
+				<h1>Skill</h1>
+			</div>
 
 			<div className="main">
 				<ul>
@@ -125,13 +126,15 @@ export const Skill = (props) => {
 						</span>
 					</div>
 
-					<li>
+					<li className="card" style={{ "--percentage": "70%" }}>
+						<div className="card-shown">
+							HTML<span className="bar"></span>
+						</div>
 						<div className="info">
 							<p>HTML</p>
-							<span style={{ "--percentage": "70%" }}></span>
+							<span className="bar"></span>
 							<div className="description">
-								<p>勉強歴：3ヶ月</p>
-								<br />
+								<p className="study-duration">勉強歴：3ヶ月</p>
 								<p>現在できること：</p>
 								<p className="sentence">
 									基礎的なタグを用いたWEBサイトのコーディング
@@ -141,30 +144,40 @@ export const Skill = (props) => {
 							</div>
 						</div>
 					</li>
-					<li>
+					<li className="card" style={{ "--percentage": "50%" }}>
+						<div className="card-shown">
+							Ruby<span className="bar"></span>
+						</div>
 						<div className="info">
 							<p>Ruby</p>
-							<span style={{ "--percentage": "50%" }}></span>
+							<span className="bar"></span>
 							<div className="description">
-								<p>勉強歴：1ヶ月</p>
-								<br />
+								<p className="study-duration">勉強歴：1ヶ月</p>
+
 								<p>現在できること：</p>
 								<p className="sentence">
-									動的計画法や2次元の累積和など、アルゴリズムを用いた処理の実装
+									アルゴリズムを用いた処理の実装
 									<br />
-									Ruby on Railsの基本的な操作（モジュール、コントローラーの生成や割り当て、HTMLへのデータ渡しなど）
+									(動的計画法や2次元の累積和など)
+									<br />
+									Ruby on Railsの基本的な操作
+									<br />
+									(Model、Controllerの生成や割り当て、HTMLへのデータ渡しなど）
 								</p>
 							</div>
 						</div>
 					</li>
 
-					<li>
+					<li className="card" style={{ "--percentage": "70%" }}>
+						<div className="card-shown">
+							CSS<span className="bar"></span>
+						</div>
 						<div className="info">
 							<p>CSS</p>
-							<span style={{ "--percentage": "70%" }}></span>
+							<span className="bar"></span>
 							<div className="description">
-								<p>勉強歴：3ヶ月</p>
-								<br />
+								<p className="study-duration">勉強歴：3ヶ月</p>
+
 								<p>現在できること：</p>
 								<p className="sentence">
 									デザインをもとにしたWEBサイトのコーディング
@@ -176,13 +189,16 @@ export const Skill = (props) => {
 							</div>
 						</div>
 					</li>
-					<li>
+					<li className="card" style={{ "--percentage": "40%" }}>
+						<div className="card-shown">
+							Sass<span className="accent-color bar"></span>
+						</div>
 						<div className="info">
-							<p>SASS</p>
-							<span className="accent-color" style={{ "--percentage": "40%" }}></span>
+							<p>Sass</p>
+							<span className="accent-color bar"></span>
 							<div className="description">
-								<p>勉強歴：2週間</p>
-								<br />
+								<p className="study-duration">勉強歴：3週間</p>
+
 								<p>現在できること：</p>
 								<p className="sentence">
 									基本的な階層ごとのCSSコーディング <br />
@@ -192,18 +208,23 @@ export const Skill = (props) => {
 							</div>
 						</div>
 					</li>
-					<li>
+					<li className="card" style={{ "--percentage": "80%" }}>
+						<div className="card-shown">
+							JavaScript<span className="bar"></span>
+						</div>
 						<div className="info">
 							<p>JavaScript</p>
-							<span style={{ "--percentage": "80%" }}></span>
+							<span className="bar"></span>
 							<div className="description">
-								<p>勉強歴：3ヶ月</p>
-								<br />
+								<p className="study-duration">勉強歴：3ヶ月</p>
+
 								<p>現在できること：</p>
 								<p className="sentence">
 									関数、クラスの作成
 									<br />
-									動的計画法や2次元の累積和など、アルゴリズムを用いた処理の実装
+									アルゴリズムを用いた処理の実装
+									<br />
+									(動的計画法や2次元の累積和など)
 									<br />
 									Promise、Asyncを用いた非同期処理の実装
 									<br />
@@ -212,13 +233,16 @@ export const Skill = (props) => {
 							</div>
 						</div>
 					</li>
-					<li>
+					<li className="card" style={{ "--percentage": "60%" }}>
+						<div className="card-shown">
+							React<span className="accent-color bar"></span>
+						</div>
 						<div className="info">
 							<p> React</p>
-							<span className="accent-color" style={{ "--percentage": "60%" }}></span>
+							<span className="accent-color bar"></span>
 							<div className="description">
-								<p>勉強歴：1ヶ月</p>
-								<br />
+								<p className="study-duration">勉強歴：1ヶ月</p>
+
 								<p>現在できること：</p>
 								<p className="sentence">
 									外部APIから情報を取得し、動的にコンテンツを表示するSPAサイトの作成
@@ -232,13 +256,16 @@ export const Skill = (props) => {
 							</div>
 						</div>
 					</li>
-					<li>
+					<li className="card" style={{ "--percentage": "93%" }}>
+						<div className="card-shown">
+							English<span className="bar"></span>
+						</div>
 						<div className="info">
 							<p> English</p>
-							<span style={{ "--percentage": "93%" }}></span>
+							<span className="bar"></span>
 							<div className="description">
-								<p>勉強歴：11年</p>
-								<br />
+								<p className="study-duration">勉強歴：11年</p>
+
 								<p>現在できること、経験：</p>
 								<p className="sentence">
 									英語での日常会話

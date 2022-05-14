@@ -1,10 +1,12 @@
 export const About = (props) => {
-	props.currentPage(1);
+	//props.currentPage(1);
 
 	return (
 		<div className="about content">
 			<span className="line"></span>
-			<h1 className="title">About</h1>
+			<div className="title">
+				<h1>About</h1>
+			</div>
 
 			<div className="main">
 				<div className="table">

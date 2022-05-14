@@ -1,9 +1,12 @@
 export const Portfolio = (props) => {
-	props.currentPage(4);
+	//props.currentPage(4);
 	return (
 		<div className="portfolio content">
 			<span className="line"></span>
-			<h1 className="title">Portfolio</h1>
+
+			<div className="title">
+				<h1>Portfolio</h1>
+			</div>
 
 			<div className="main">
 				<div className="product-1 file">

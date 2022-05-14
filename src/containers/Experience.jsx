@@ -1,9 +1,11 @@
 export const Experience = (props) => {
-	props.currentPage(2);
+	//props.currentPage(2);
 	return (
 		<div className="experience content">
 			<span className="line"></span>
-			<h1 className="title">Experience</h1>
+			<div className="title">
+				<h1>Experience</h1>
+			</div>
 
 			<div className="main">
 				<div className="table">
